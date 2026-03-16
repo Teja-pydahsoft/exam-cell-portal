@@ -142,20 +142,7 @@ const Institution = ({ initialTab = 'colleges' }) => {
 
     return (
         <div className="institution-container">
-            <div className="institution-header">
-                <div>
-                    <h1 className="institution-title">Institution</h1>
-                    <p className="institution-subtitle">Overview of all institutional entities.</p>
-                </div>
-            </div>
-
-            <div className="institution-controls">
-                <div className="tabs-container">
-                    <TabButton id="colleges" label="Colleges" icon={Building2} />
-                    <TabButton id="programs" label="Programs" icon={GraduationCap} />
-                    <TabButton id="branches" label="Branches" icon={GitBranch} />
-                    <TabButton id="batches" label="Batches" icon={Layers} />
-                </div>
+            <div className="institution-controls" style={{ marginTop: '1rem', justifyContent: 'flex-end' }}>
 
                 <div className="search-container">
                     <div className="search-icon">

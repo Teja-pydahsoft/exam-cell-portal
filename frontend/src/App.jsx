@@ -9,10 +9,11 @@ const AdminLayout = lazy(() => import('./components/Layout/AdminLayout'));
 // Lazy load pages
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const FacultyManagement = lazy(() => import('./pages/admin/FacultyManagement'));
-const AttendanceMonitoring = lazy(() => import('./pages/admin/AttendanceMonitoring'));
+// const AttendanceMonitoring = lazy(() => import('./pages/admin/AttendanceMonitoring'));
 const Institution = lazy(() => import('./pages/admin/Institution'));
+const StudentManagement = lazy(() => import('./pages/admin/StudentManagement'));
 const Subjects = lazy(() => import('./pages/admin/Subjects'));
-const Timetable = lazy(() => import('./pages/admin/Timetable'));
+// const Timetable = lazy(() => import('./pages/admin/Timetable'));
 const Regulations = lazy(() => import('./pages/admin/Regulations'));
 
 function PrivateRoute({ children, allowedRoles }) {
@@ -37,20 +38,40 @@ function App() {
                             <AdminLayout />
                         </PrivateRoute>
                     }>
-                        <Route index element={<Navigate to="dashboard" replace />} />
-                        <Route path="dashboard" element={<AdminDashboard />} />
-                        <Route path="faculty" element={<FacultyManagement />} />
-                        <Route path="attendance" element={<AttendanceMonitoring />} />
-                        <Route path="institution" element={<Institution />} />
-                        <Route path="colleges" element={<Institution initialTab="colleges" />} />
-                        <Route path="programs" element={<Institution initialTab="programs" />} />
-                        <Route path="batches" element={<Institution initialTab="batches" />} />
-                        <Route path="subjects" element={<Subjects />} />
-                        <Route path="timetable" element={<Timetable />} />
-                        <Route path="regulations" element={<Regulations />} />
+                        {/* Master Setup */}
+                        <Route path="master-setup">
+                            <Route index element={<Navigate to="dashboard" replace />} />
+                            <Route path="dashboard" element={<AdminDashboard />} />
+                            <Route path="institution" element={<Institution />} />
+                            <Route path="colleges" element={<Institution initialTab="colleges" />} />
+                            <Route path="programs" element={<Institution initialTab="programs" />} />
+                            <Route path="branches" element={<Institution initialTab="branches" />} />
+                            <Route path="batches" element={<Institution initialTab="batches" />} />
+                        </Route>
+
+                        {/* Regulation Mapping */}
+                        <Route path="regulation-mapping">
+                            <Route index element={<Navigate to="regulations" replace />} />
+                            <Route path="regulations" element={<Regulations />} />
+                            <Route path="subjects" element={<Subjects />} />
+                        </Route>
+
+                        {/* User Management */}
+                        <Route path="user-management">
+                            <Route index element={<Navigate to="faculty" replace />} />
+                            <Route path="faculty" element={<FacultyManagement />} />
+                        </Route>
+
+                        {/* Student Management & Examinations Routes */}
+                        <Route path="student-management">
+                            <Route index element={<StudentManagement />} />
+                        </Route>
+                        <Route path="examinations" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Examinations</h2><p>Coming Soon</p></div>} />
                     </Route>
 
-                    <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+                    {/* Default Redirect handles the new structure */}
+                    <Route path="/admin" element={<Navigate to="/admin/master-setup/dashboard" replace />} />
+                    <Route path="/" element={<Navigate to="/admin/master-setup/dashboard" replace />} />
                 </Routes>
             </Suspense>
         </BrowserRouter>

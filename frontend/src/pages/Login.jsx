@@ -17,7 +17,7 @@ const Login = () => {
         setIsLoading(true);
         const success = await login(username, password);
         if (success) {
-            navigate('/admin/dashboard');
+            navigate('/admin/master-setup/dashboard');
         }
         setIsLoading(false);
     };
@@ -34,10 +34,10 @@ const Login = () => {
                         <img src={logo} className="w-64 h-auto" alt="Pydah Group" />
                     </div>
                     <h1 className="hero-title">
-                        Academic <br /> <span style={{ color: 'var(--accent-400)' }}>Excellence</span>
+                        Exam Cell <br /> <span style={{ color: 'var(--accent-400)' }}>Portal</span>
                     </h1>
                     <p className="hero-subtitle">
-                        Welcome to the next generation academic portal. Manage attendance, track performance, and connect with faculty in one seamless workspace.
+                        Welcome to the central Exam Cell Portal. Manage examinations, track results, and coordinate faculty assignments in one seamless workspace.
                     </p>
                 </div>
             </div>

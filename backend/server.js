@@ -32,37 +32,35 @@ const authRoutes = require('./routes/authRoutes');
 const facultyRoutes = require('./routes/facultyRoutes');
 const periodSlotsRoutes = require('./routes/periodSlotsRoutes');
 const subjectsRoutes = require('./routes/subjectsRoutes');
-const hourlyAttendanceRoutes = require('./routes/hourlyAttendanceRoutes');
 const academicContentRoutes = require('./routes/academicContentRoutes');
 const internalMarksRoutes = require('./routes/internalMarksRoutes');
-const timetableRoutes = require('./routes/timetableRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const institutionRoutes = require('./routes/institutionRoutes');
 const regulationsRoutes = require('./routes/regulationsRoutes');
 const hrmsRoutes = require('./routes/hrmsRoutes');
 const facultySubjectsRoutes = require('./routes/facultySubjectsRoutes');
+const studentRoutes = require('./routes/studentRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/faculty', facultyRoutes);
 app.use('/api/period-slots', periodSlotsRoutes);
 app.use('/api/subjects', subjectsRoutes);
-app.use('/api/attendance', hourlyAttendanceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/institution', institutionRoutes);
 app.use('/api/academic-content', academicContentRoutes);
 app.use('/api/internal-marks', internalMarksRoutes);
-app.use('/api/timetable', timetableRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/regulations', regulationsRoutes);
 app.use('/api/hrms', hrmsRoutes);
 app.use('/api/faculty-subjects', facultySubjectsRoutes);
+app.use('/api/students', studentRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
     res.json({
         success: true,
-        service: 'Pydah V2 Academic Portal',
+        service: 'Pydah V2 Exam Cell Portal',
         version: '2.0.0',
         timestamp: new Date().toISOString()
     });
@@ -71,7 +69,7 @@ app.get('/health', (req, res) => {
 // Root API
 app.get('/api', (req, res) => {
     res.json({
-        message: 'Pydah Academic Portal V2 API',
+        message: 'Pydah Exam Cell Portal V2 API',
         version: '2.0.0',
         status: 'running'
     });
@@ -105,7 +103,7 @@ const startServer = async () => {
         }
 
         app.listen(PORT, () => {
-            console.log(`\n✅ Pydah V2 Academic Portal Backend`);
+            console.log(`\n✅ Pydah V2 Exam Cell Portal Backend`);
             console.log(`🌐 Server running on port ${PORT}`);
             console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
         });

@@ -1,30 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap');
+
 
 :root {
   /* Core Colors */
-  --primary-50: #f4f6f4;
-  --primary-100: #e3ebe3;
-  --primary-200: #c5d6c5;
-  --primary-300: #9eb89e;
-  --primary-400: #759775;
-  --primary-500: #3D4127;
-  /* Deep Olive - Base */
-  --primary-600: #313420;
-  --primary-700: #262919;
-  --primary-800: #1c1e13;
-  --primary-900: #0f100a;
+  --primary-50: #f0f4f8;
+  --primary-100: #d9e2ec;
+  --primary-200: #bcccdc;
+  --primary-300: #9fb3c8;
+  --primary-400: #829ab1;
+  --primary-500: #627d98;
+  /* Navy - Base */
+  --primary-600: #486581;
+  --primary-700: #334e68;
+  --primary-800: #243b53;
+  --primary-900: #102a43;
 
-  --accent-50: #f5f9f2;
-  --accent-100: #e9f2e3;
-  --accent-200: #d0e4c4;
-  --accent-300: #aeca9b;
-  --accent-400: #86a971;
-  --accent-500: #5F8C41;
-  /* Sage Green - Accent */
-  --accent-600: #4a6f32;
-  --accent-700: #395427;
-  --accent-800: #2d4120;
-  --accent-900: #151f0f;
+  --accent-50: #fff9e6;
+  --accent-100: #ffecb3;
+  --accent-200: #ffe082;
+  --accent-300: #ffd54f;
+  --accent-400: #ffca28;
+  --accent-500: #ffc107;
+  /* Amber/Gold - Accent */
+  --accent-600: #ffb300;
+  --accent-700: #ffa000;
+  --accent-800: #ff8f00;
+  --accent-900: #ff6f00;
 
   /* Neutrals */
   --gray-50: #fafafa;
@@ -56,7 +56,7 @@
 
 body {
   margin: 0;
-  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   background-color: var(--bg-app);
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
@@ -70,7 +70,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Times New Roman', Times, serif;
   margin-top: 0;
   color: var(--primary-500);
 }
@@ -174,7 +174,7 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(15, 16, 10, 0.9) 0%, rgba(61, 65, 39, 0.8) 100%);
+  background: linear-gradient(135deg, rgba(16, 42, 67, 0.9) 0%, rgba(98, 125, 152, 0.8) 100%);
   z-index: 10;
 }
 
@@ -197,7 +197,7 @@ h6 {
   align-items: center;
   justify-content: center;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 32px;
   font-weight: 700;
   color: white;
@@ -208,7 +208,7 @@ h6 {
   font-size: 3.5rem;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Times New Roman', Times, serif;
   color: white;
 }
 
@@ -283,7 +283,7 @@ h6 {
   font-weight: bold;
   font-size: 1.25rem;
   color: white;
-  box-shadow: 0 4px 12px rgba(95, 140, 65, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
 }
 
 .nav-section {
@@ -323,7 +323,7 @@ h6 {
 }
 
 .nav-item.active {
-  background: linear-gradient(90deg, rgba(95, 140, 65, 0.2) 0%, rgba(95, 140, 65, 0) 100%);
+  background: linear-gradient(90deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 193, 7, 0) 100%);
   color: var(--accent-400);
   border-left: 3px solid var(--accent-500);
 }
@@ -397,7 +397,7 @@ h6 {
 .form-input:focus {
   outline: none;
   border-color: var(--primary-500);
-  box-shadow: 0 0 0 3px rgba(61, 65, 39, 0.1);
+  box-shadow: 0 0 0 3px rgba(98, 125, 152, 0.1);
 }
 
 /* --- Buttons --- */
@@ -414,18 +414,18 @@ h6 {
   cursor: pointer;
   border: none;
   gap: 0.5rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
   color: white;
-  box-shadow: 0 4px 6px -1px rgba(61, 65, 39, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(98, 125, 152, 0.2);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(61, 65, 39, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(98, 125, 152, 0.3);
 }
 
 /* --- Dashboard --- */
@@ -471,7 +471,7 @@ h6 {
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  border-color: rgba(95, 140, 65, 0.2);
+  border-color: rgba(255, 193, 7, 0.2);
 }
 
 .stat-icon-box {
