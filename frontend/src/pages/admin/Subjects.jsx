@@ -25,6 +25,11 @@ const Subjects = () => {
     const [assignmentBatch, setAssignmentBatch] = useState('');
     const [assignmentEmployeeId, setAssignmentEmployeeId] = useState('');
     const [facultyLoading, setFacultyLoading] = useState(false);
+    
+    // Bulk Upload state
+    const [showUploadModal, setShowUploadModal] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     // Page-level filter state
     const [filter, setFilter] = useState({
@@ -45,7 +50,19 @@ const Subjects = () => {
         subject_type: 'theory',
         units: '',
         experiments_count: '',
-        credits: ''
+        credits: '',
+        // Extended fields
+        subject_order: '',
+        short_name: '',
+        is_elective: 0,
+        elective_name: '',
+        is_replacement: 0,
+        internal_max_marks: '',
+        external_max_marks: '',
+        sub_type: 0,
+        is_running_regulation: 1,
+        is_common_subject: 0,
+        exam_code: ''
     });
 
     // Derived data from selected regulation
@@ -169,7 +186,10 @@ const Subjects = () => {
             year_of_study: filter.year_of_study || '',
             semester_number: filter.semester_number || '',
             name: '', code: '', subject_type: 'theory',
-            units: '', experiments_count: '', credits: ''
+            units: '', experiments_count: '', credits: '',
+            subject_order: '', short_name: '', is_elective: 0, elective_name: '',
+            is_replacement: 0, internal_max_marks: '', external_max_marks: '',
+            sub_type: 0, is_running_regulation: 1, is_common_subject: 0, exam_code: ''
         });
         setModalStep(1);
         setShowModal(true);
@@ -188,7 +208,18 @@ const Subjects = () => {
             subject_type: subject.subject_type || 'theory',
             units: subject.units || '',
             experiments_count: subject.experiments_count || '',
-            credits: subject.credits || ''
+            credits: subject.credits || '',
+            subject_order: subject.subject_order || '',
+            short_name: subject.short_name || '',
+            is_elective: subject.is_elective || 0,
+            elective_name: subject.elective_name || '',
+            is_replacement: subject.is_replacement || 0,
+            internal_max_marks: subject.internal_max_marks || '',
+            external_max_marks: subject.external_max_marks || '',
+            sub_type: subject.sub_type || 0,
+            is_running_regulation: subject.is_running_regulation ?? 1,
+            is_common_subject: subject.is_common_subject || 0,
+            exam_code: subject.exam_code || ''
         });
         setModalStep(1);
         setShowModal(true);
@@ -208,7 +239,18 @@ const Subjects = () => {
                 subject_type: form.subject_type,
                 units: form.subject_type === 'theory' ? (form.units || null) : null,
                 experiments_count: form.subject_type === 'lab' ? (form.experiments_count || null) : null,
-                credits: form.credits || null
+                credits: form.credits || null,
+                subject_order: form.subject_order || null,
+                short_name: form.short_name || null,
+                is_elective: form.is_elective,
+                elective_name: form.is_elective ? form.elective_name : null,
+                is_replacement: form.is_replacement,
+                internal_max_marks: form.internal_max_marks || null,
+                external_max_marks: form.external_max_marks || null,
+                sub_type: form.sub_type,
+                is_running_regulation: form.is_running_regulation,
+                is_common_subject: form.is_common_subject,
+                exam_code: form.exam_code || null
             };
             if (isEditing) {
                 await api.put(`/subjects/${editingId}`, payload);
@@ -300,8 +342,52 @@ const Subjects = () => {
     const filtered = subjects.filter(s =>
         !searchTerm ||
         s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (s.code && s.code.toLowerCase().includes(searchTerm.toLowerCase()))
+        (s.code && s.code.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (s.short_name && s.short_name.toLowerCase().includes(searchTerm.toLowerCase()))
     );
+
+    const handleDownloadTemplate = async () => {
+        try {
+            const resp = await api.get('/subjects/template', { responseType: 'blob' });
+            const url = window.URL.createObjectURL(new Blob([resp.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'subject_upload_template.csv');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (err) { alert('Failed to download template'); }
+    };
+
+    const handleFileUpload = async (e) => {
+        e.preventDefault();
+        if (!selectedFile) return alert('Please select a file');
+        
+        setUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            formData.append('regulation_id', filter.regulation_id);
+            formData.append('branch_id', filter.branch_id);
+            formData.append('year_of_study', filter.year_of_study);
+            formData.append('semester_number', filter.semester_number);
+
+            const resp = await api.post('/subjects/upload', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+
+            if (resp.data.success) {
+                alert(resp.data.message);
+                setShowUploadModal(false);
+                setSelectedFile(null);
+                fetchSubjects();
+            }
+        } catch (err) {
+            alert(err.response?.data?.message || 'Upload failed');
+        } finally {
+            setUploading(false);
+        }
+    };
 
     // Group by Branch → "Year X — Sem Y"
     const grouped = filtered.reduce((acc, subj) => {
@@ -321,9 +407,14 @@ const Subjects = () => {
                     <p className="page-subtitle" style={{ color: '#6b7280', marginTop: '4px' }}>Manage curriculum subjects across branches and semesters.</p>
                 </div>
                 {filter.regulation_id && (
-                    <button className="btn btn-primary" onClick={openCreateModal} style={{ whiteSpace: 'nowrap' }}>
-                        <Plus size={16} /> Add Subject
-                    </button>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                        <button className="btn btn-outline" onClick={() => setShowUploadModal(true)} style={{ whiteSpace: 'nowrap' }}>
+                            <BookOpen size={16} /> Bulk Import
+                        </button>
+                        <button className="btn btn-primary" onClick={openCreateModal} style={{ whiteSpace: 'nowrap' }}>
+                            <Plus size={16} /> Add Subject
+                        </button>
+                    </div>
                 )}
             </div>
 
@@ -601,6 +692,93 @@ const Subjects = () => {
                                                 </div>
                                             )}
                                         </div>
+
+                                        <div className="form-group" style={{ marginTop: '12px' }}>
+                                            <label className="form-label">Sub Type *</label>
+                                            <select name="sub_type" value={form.sub_type} onChange={handleFormChange} className="form-select" required>
+                                                <option value="0">Theory</option>
+                                                <option value="1">Laboratory</option>
+                                                <option value="2">Dr</option>
+                                                <option value="3">Pr</option>
+                                                <option value="4">Others</option>
+                                                <option value="5">Skill Oriented Course</option>
+                                                <option value="6">Integrated</option>
+                                                <option value="7">Audit</option>
+                                                <option value="8">Mandatory</option>
+                                                <option value="9">Community Service Project</option>
+                                                <option value="10">Internship</option>
+                                                <option value="11">Mini Project</option>
+                                                <option value="12">Semester</option>
+                                            </select>
+                                        </div>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div className="form-group">
+                                                <label className="form-label">Subject Order</label>
+                                                <input type="number" name="subject_order" value={form.subject_order} onChange={handleFormChange} className="form-input" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="form-label">Short Name</label>
+                                                <input type="text" name="short_name" value={form.short_name} onChange={handleFormChange} className="form-input" />
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div className="form-group">
+                                                <label className="form-label">Running Regulation</label>
+                                                <select name="is_running_regulation" value={form.is_running_regulation} onChange={handleFormChange} className="form-select">
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="form-label">Common Subject</label>
+                                                <select name="is_common_subject" value={form.is_common_subject} onChange={handleFormChange} className="form-select">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div className="form-group">
+                                                <label className="form-label">Internal Max</label>
+                                                <input type="number" name="internal_max_marks" value={form.internal_max_marks} onChange={handleFormChange} className="form-input" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="form-label">External Max</label>
+                                                <input type="number" name="external_max_marks" value={form.external_max_marks} onChange={handleFormChange} className="form-input" />
+                                            </div>
+                                        </div>
+
+                                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                                            <div className="form-group">
+                                                <label className="form-label">Elective</label>
+                                                <select name="is_elective" value={form.is_elective} onChange={handleFormChange} className="form-select">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
+                                                </select>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="form-label">Is Replacement</label>
+                                                <select name="is_replacement" value={form.is_replacement} onChange={handleFormChange} className="form-select">
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        {form.is_elective === "1" && (
+                                            <div className="form-group">
+                                                <label className="form-label">Elective Name</label>
+                                                <input type="text" name="elective_name" value={form.elective_name} onChange={handleFormChange} className="form-input" />
+                                            </div>
+                                        )}
+
+                                        <div className="form-group">
+                                            <label className="form-label">Exam Code</label>
+                                            <input type="text" name="exam_code" value={form.exam_code} onChange={handleFormChange} className="form-input" />
+                                        </div>
                                     </div>
                                 )}
                             </div>
@@ -628,6 +806,64 @@ const Subjects = () => {
                     </div>
                 </div>
             )}
+            {/* Bulk Upload Modal */}
+            {showUploadModal && (
+                <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
+                    <div className="modal-content" style={{ maxWidth: '500px' }} onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 className="modal-title font-display">Bulk Import Subjects</h3>
+                            <button type="button" className="modal-close" onClick={() => setShowUploadModal(false)}><X size={24} /></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="info-alert" style={{ background: '#f0f9ff', border: '1px solid #bae6fd', padding: '12px', borderRadius: '8px', marginBottom: '20px', fontSize: '13px', color: '#0369a1' }}>
+                                <p><strong>Note:</strong> Subjects will be imported for the currently filtered Regulation, Year, and Semester.</p>
+                                <p style={{ marginTop: '8px' }}>
+                                    Regulation: <strong>{activeRegulation?.name}</strong><br />
+                                    Branch: <strong>{pageBranches.find(b => String(b.id) === String(filter.branch_id))?.name || 'All Branches'}</strong><br />
+                                    Year: <strong>{filter.year_of_study || 'N/A'}</strong>, Sem: <strong>{filter.semester_number || 'N/A'}</strong>
+                                </p>
+                            </div>
+
+                            <div style={{ marginBottom: '20px' }}>
+                                <h4 style={{ fontSize: '13px', fontWeight: 600, marginBottom: '8px' }}>Step 1: Download Template</h4>
+                                <button className="btn btn-outline w-full" onClick={handleDownloadTemplate}>
+                                    Download CSV Template
+                                </button>
+                            </div>
+
+                            <div>
+                                <h4 style={{ fontSize: '13px', fontWeight: 600, marginBottom: '8px' }}>Step 2: Upload Filled Template</h4>
+                                <div style={{ border: '2px dashed #e5e7eb', borderRadius: '8px', padding: '24px', textAlign: 'center' }}>
+                                    <input 
+                                        type="file" 
+                                        accept=".csv" 
+                                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                                        style={{ display: 'none' }}
+                                        id="csv-upload"
+                                    />
+                                    <label htmlFor="csv-upload" style={{ cursor: 'pointer' }}>
+                                        <div style={{ color: '#6b7280', marginBottom: '12px' }}>
+                                            {selectedFile ? selectedFile.name : 'Click to select or drag CSV file'}
+                                        </div>
+                                        <div className="btn btn-outline" style={{ display: 'inline-flex' }}>Browse Files</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-outline" onClick={() => setShowUploadModal(false)}>Cancel</button>
+                            <button 
+                                className="btn btn-primary" 
+                                onClick={handleFileUpload} 
+                                disabled={uploading || !selectedFile || !filter.regulation_id || !filter.year_of_study || !filter.semester_number}
+                            >
+                                {uploading ? 'Uploading...' : 'Upload & Process'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Faculty Assignment Modal */}
             {showFacultyModal && selectedFacultySubject && (
                 <div className="modal-overlay" onClick={() => setShowFacultyModal(false)}>
