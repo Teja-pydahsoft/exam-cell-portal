@@ -41,6 +41,7 @@ const regulationsRoutes = require('./routes/regulationsRoutes');
 const hrmsRoutes = require('./routes/hrmsRoutes');
 const facultySubjectsRoutes = require('./routes/facultySubjectsRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const examCellRoutes = require('./routes/examCellRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/faculty', facultyRoutes);
@@ -55,6 +56,7 @@ app.use('/api/regulations', regulationsRoutes);
 app.use('/api/hrms', hrmsRoutes);
 app.use('/api/faculty-subjects', facultySubjectsRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/exam-cell', examCellRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

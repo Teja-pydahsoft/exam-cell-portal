@@ -113,6 +113,10 @@ const AdminLayout = () => {
                                 <Users size={18} />
                                 <span>Student Directory</span>
                             </Link>
+                            <Link to="/admin/student-management/settings" className={`nav-item ${location.pathname.includes('/student-management/settings') ? 'active' : ''}`}>
+                                <Settings size={18} />
+                                <span>Field Settings</span>
+                            </Link>
                         </div>
                     </div>
                 );
@@ -198,8 +202,8 @@ const AdminLayout = () => {
                 </aside>
 
                 {/* Main Content */}
-                <main className="main-content">
-                    <div className="container animate-fade-in relative h-full">
+                <main className="main-content flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 custom-scrollbar">
+                    <div className="animate-fade-in relative min-h-full">
                         <React.Suspense fallback={
                             <div className="absolute inset-0 flex items-center justify-center bg-transparent">
                                 <div className="loading-spinner" style={{ width: '40px', height: '40px', border: '3px solid rgba(0,0,0,0.1)', borderTopColor: 'var(--accent-500)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>

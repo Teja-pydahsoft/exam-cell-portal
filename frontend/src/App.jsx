@@ -12,6 +12,7 @@ const FacultyManagement = lazy(() => import('./pages/admin/FacultyManagement'));
 // const AttendanceMonitoring = lazy(() => import('./pages/admin/AttendanceMonitoring'));
 const Institution = lazy(() => import('./pages/admin/Institution'));
 const StudentManagement = lazy(() => import('./pages/admin/StudentManagement'));
+const StudentFieldSettings = lazy(() => import('./pages/admin/StudentFieldSettings'));
 const Subjects = lazy(() => import('./pages/admin/Subjects'));
 // const Timetable = lazy(() => import('./pages/admin/Timetable'));
 const Regulations = lazy(() => import('./pages/admin/Regulations'));
@@ -65,6 +66,7 @@ function App() {
                         {/* Student Management & Examinations Routes */}
                         <Route path="student-management">
                             <Route index element={<StudentManagement />} />
+                            <Route path="settings" element={<StudentFieldSettings />} />
                         </Route>
                         <Route path="examinations" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Examinations</h2><p>Coming Soon</p></div>} />
                     </Route>
