@@ -24,6 +24,7 @@ const AdminLayout = () => {
         if (path.includes('/master-setup')) return 'master-setup';
         if (path.includes('/regulation-mapping')) return 'regulation-mapping';
         if (path.includes('/faculty-assignment')) return 'regulation-mapping';
+        if (path.includes('/grade-system')) return 'regulation-mapping';
         if (path.includes('/user-management')) return 'user-management';
         if (path.includes('/student-management/nominal-roll')) return 'student-management';
         if (path.includes('/student-management')) return 'student-management';
@@ -95,6 +96,10 @@ const AdminLayout = () => {
                             <Link to="/admin/regulation-mapping/faculty-assignment" className={`nav-item ${location.pathname.includes('/regulation-mapping/faculty-assignment') ? 'active' : ''}`}>
                                 <UserPlus size={18} />
                                 <span>Faculty Assignment</span>
+                            </Link>
+                            <Link to="/admin/regulation-mapping/grade-system" className={`nav-item ${location.pathname.includes('/regulation-mapping/grade-system') ? 'active' : ''}`}>
+                                <Scroll size={18} />
+                                <span>Grade System</span>
                             </Link>
                         </div>
                     </div>

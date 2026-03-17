@@ -106,3 +106,45 @@ exports.assignBatches = async (req, res) => {
         connection.release();
     }
 };
+
+exports.getGradeSettings = async (req, res) => {
+    try {
+        const [rows] = await masterPool.query('SELECT * FROM grade_settings ORDER BY min_percentage DESC');
+        res.json({ success: true, data: rows });
+    } catch (error) {
+        console.error('Error fetching global grade settings:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch grade settings' });
+    }
+};
+
+exports.saveGradeSettings = async (req, res) => {
+    const connection = await masterPool.getConnection();
+    try {
+        const { grades } = req.body;
+
+        await connection.beginTransaction();
+        await connection.query('DELETE FROM grade_settings');
+
+        if (grades && grades.length > 0) {
+            const values = grades.map(g => [
+                g.grade_name,
+                g.min_percentage,
+                g.max_percentage,
+                g.points || 0
+            ]);
+            await connection.query(
+                'INSERT INTO grade_settings (grade_name, min_percentage, max_percentage, points) VALUES ?',
+                [values]
+            );
+        }
+
+        await connection.commit();
+        res.json({ success: true, message: 'Global grade settings saved successfully' });
+    } catch (error) {
+        await connection.rollback();
+        console.error('Error saving global grade settings:', error);
+        res.status(500).json({ success: false, message: 'Failed to save grade settings' });
+    } finally {
+        connection.release();
+    }
+};

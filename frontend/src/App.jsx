@@ -17,6 +17,7 @@ const Subjects = lazy(() => import('./pages/admin/Subjects'));
 // const Timetable = lazy(() => import('./pages/admin/Timetable'));
 const Regulations = lazy(() => import('./pages/admin/Regulations'));
 const FacultyAssignment = lazy(() => import('./pages/admin/FacultyAssignment'));
+const GradeSystem = lazy(() => import('./pages/admin/GradeSystem'));
 const NominalRoll = lazy(() => import('./pages/admin/NominalRoll'));
 const UpdatePhotos = lazy(() => import('./pages/admin/UpdatePhotos'));
 const UpdateSignatures = lazy(() => import('./pages/admin/UpdateSignatures'));
@@ -63,6 +64,7 @@ function App() {
                             <Route path="regulations" element={<Regulations />} />
                             <Route path="subjects" element={<Subjects />} />
                             <Route path="faculty-assignment" element={<FacultyAssignment />} />
+                            <Route path="grade-system" element={<GradeSystem />} />
                         </Route>
 
                         {/* User Management */}
