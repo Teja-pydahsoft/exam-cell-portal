@@ -1,8 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Users, BookOpen, Clock, FileText, Settings, LogOut, MessageSquare, ChevronRight, Building2, GraduationCap, Layers, Scroll, GitBranch, UploadCloud, UserPlus } from 'lucide-react';
-
+import { LayoutDashboard, Users, BookOpen, Clock, FileText, Settings, LogOut, MessageSquare, ChevronRight, Building2, GraduationCap, Layers, Scroll, GitBranch, UploadCloud, UserPlus, ArrowRight } from 'lucide-react';
 
 import logo from '../../assets/logo.png';
 
@@ -122,6 +121,10 @@ const AdminLayout = () => {
                             <Link to="/admin/student-management/nominal-roll" className={`nav-item ${location.pathname.includes('/student-management/nominal-roll') ? 'active' : ''}`}>
                                 <FileText size={18} />
                                 <span>Nominal Roll</span>
+                            </Link>
+                            <Link to="/admin/student-management/promotions" className={`nav-item ${location.pathname.includes('/student-management/promotions') ? 'active' : ''}`}>
+                                <ArrowRight size={18} />
+                                <span>Promotions</span>
                             </Link>
                             <Link to="/admin/student-management/update-photos" className={`nav-item ${location.pathname.includes('/student-management/update-photos') ? 'active' : ''}`}>
                                 <UploadCloud size={18} />
