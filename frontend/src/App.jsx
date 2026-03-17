@@ -21,6 +21,7 @@ const NominalRoll = lazy(() => import('./pages/admin/NominalRoll'));
 const UpdatePhotos = lazy(() => import('./pages/admin/UpdatePhotos'));
 const UpdateSignatures = lazy(() => import('./pages/admin/UpdateSignatures'));
 const StudentPromotions = lazy(() => import('./pages/admin/StudentPromotions'));
+const AdminHome = lazy(() => import('./pages/admin/AdminHome'));
 
 function PrivateRoute({ children, allowedRoles }) {
     const { user, loading } = useAuth();
@@ -44,6 +45,7 @@ function App() {
                             <AdminLayout />
                         </PrivateRoute>
                     }>
+                        <Route path="home" element={<AdminHome />} />
                         {/* Master Setup */}
                         <Route path="master-setup">
                             <Route index element={<Navigate to="dashboard" replace />} />
@@ -82,8 +84,8 @@ function App() {
                     </Route>
 
                     {/* Default Redirect handles the new structure */}
-                    <Route path="/admin" element={<Navigate to="/admin/master-setup/dashboard" replace />} />
-                    <Route path="/" element={<Navigate to="/admin/master-setup/dashboard" replace />} />
+                    <Route path="/admin" element={<Navigate to="/admin/home" replace />} />
+                    <Route path="/" element={<Navigate to="/admin/home" replace />} />
                 </Routes>
             </Suspense>
         </BrowserRouter>

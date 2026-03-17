@@ -464,7 +464,7 @@ const StudentManagement = () => {
     };
 
     return (
-        <div className="p-2 anim-fade-in">
+        <div className="student-management-page p-2 anim-fade-in">
             <div className="flex justify-between items-center mb-4">
                 <div>
                     <h1 className="text-3xl font-bold text-primary-900" style={{ fontFamily: 'Times New Roman' }}>Student Management</h1>
@@ -563,7 +563,7 @@ const StudentManagement = () => {
                                         <td className="px-3 py-2">
                                             <div className="w-8 h-8 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
                                                 {student.student_photo ? (
-                                                    <img src={student.student_photo} alt="" className="w-full h-full object-cover" />
+                                                    <img src={student.student_photo} alt="" className="student-photo-thumbnail" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-gray-300">
                                                         <User size={16} />

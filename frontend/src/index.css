@@ -509,6 +509,44 @@ h6 {
   height: 100%;
 }
 
+/* Folder Type Navigation Styles */
+.folder-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+    position: relative;
+    z-index: 1;
+}
+
+.folder-card::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    width: 60px;
+    height: 10px;
+    background: inherit;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-bottom: none;
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.folder-card:hover::before {
+    opacity: 1;
+    top: -10px;
+}
+
+.folder-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.sidebar {
+    transition: all 0.3s ease-in-out;
+}
+
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
@@ -651,4 +689,95 @@ h6 {
   opacity: 0.9;
   width: 110px;
   height: auto;
+}
+/* Home Page Background Animation */
+.home-bg-animation {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.mesh-gradient {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(244, 63, 94, 0.15) 0px, transparent 50%);
+    filter: blur(80px);
+    animation: mesh-move 20s ease infinite alternate;
+}
+
+@keyframes mesh-move {
+    0% { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(10deg) scale(1.1); }
+}
+
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.6;
+    z-index: -1;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: rgba(59, 130, 246, 0.1);
+    top: -100px;
+    left: -100px;
+    animation: float-1 25s infinite alternate ease-in-out;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: rgba(16, 185, 129, 0.1);
+    bottom: -150px;
+    right: -150px;
+    animation: float-2 30s infinite alternate ease-in-out;
+}
+
+.orb-3 {
+    width: 300px;
+    height: 300px;
+    background: rgba(139, 92, 246, 0.1);
+    top: 40%;
+    right: 15%;
+    animation: float-3 20s infinite alternate ease-in-out;
+}
+
+@keyframes float-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(100px, 50px) scale(1.2); }
+}
+
+@keyframes float-2 {
+    0% { transform: translate(0, 0) scale(1.1); }
+    100% { transform: translate(-80px, -60px) scale(0.9); }
+}
+
+@keyframes float-3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(40px, 80px) rotate(45deg); }
+}
+
+/* Glassmorphism Refinement */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+.glass-effect:hover {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(255, 255, 255, 0.6) !important;
 }
