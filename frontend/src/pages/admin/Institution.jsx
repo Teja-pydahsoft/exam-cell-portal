@@ -141,7 +141,7 @@ const Institution = ({ initialTab = 'colleges' }) => {
     };
 
     return (
-        <div className="institution-container">
+        <div className="institution-container min-h-full">
             <div className="institution-controls" style={{ marginTop: '1rem', justifyContent: 'flex-end' }}>
 
                 <div className="search-container">

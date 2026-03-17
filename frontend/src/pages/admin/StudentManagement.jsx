@@ -420,9 +420,8 @@ const StudentManagement = () => {
         const { name, value } = e.target;
         setFilters(prev => {
             const newFilters = { ...prev, [name]: value };
-            if (name === 'college') { newFilters.program = ''; newFilters.branch = ''; newFilters.batch = ''; }
-            if (name === 'program') { newFilters.branch = ''; newFilters.batch = ''; }
-            if (name === 'branch') { newFilters.batch = ''; }
+            if (name === 'college') { newFilters.program = ''; newFilters.branch = ''; }
+            if (name === 'program') { newFilters.branch = ''; }
             return newFilters;
         });
     };

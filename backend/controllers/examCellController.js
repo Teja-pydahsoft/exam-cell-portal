@@ -12,19 +12,39 @@ exports.getFieldDefinitions = async (req, res) => {
 };
 
 exports.addFieldDefinition = async (req, res) => {
-    const { label, type, options } = req.body;
+    const { label, type, options, category } = req.body;
     if (!label || !type) {
         return res.status(400).json({ success: false, message: 'Label and Type are required' });
     }
     try {
         const [result] = await masterPool.query(
-            'INSERT INTO exam_cell_field_definitions (field_label, field_type, field_options) VALUES (?, ?, ?)',
-            [label, type, options ? JSON.stringify(options) : null]
+            'INSERT INTO exam_cell_field_definitions (field_label, field_type, field_options, field_category) VALUES (?, ?, ?, ?)',
+            [label, type, options ? JSON.stringify(options) : null, category || 'General']
         );
         res.status(201).json({ success: true, id: result.insertId });
     } catch (error) {
         console.error('Error adding field definition:', error);
         res.status(500).json({ success: false, message: 'Failed to add field definition' });
+    }
+};
+
+exports.updateFieldDefinition = async (req, res) => {
+    const { id } = req.params;
+    const { label, type, options, category } = req.body;
+    
+    if (!label || !type) {
+        return res.status(400).json({ success: false, message: 'Label and Type are required' });
+    }
+
+    try {
+        await masterPool.query(
+            'UPDATE exam_cell_field_definitions SET field_label = ?, field_type = ?, field_options = ?, field_category = ? WHERE id = ?',
+            [label, type, options ? JSON.stringify(options) : null, category || 'General', id]
+        );
+        res.json({ success: true, message: 'Field definition updated successfully' });
+    } catch (error) {
+        console.error('Error updating field definition:', error);
+        res.status(500).json({ success: false, message: 'Failed to update field definition' });
     }
 };
 

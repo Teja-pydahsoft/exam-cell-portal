@@ -138,9 +138,9 @@ const AdminLayout = () => {
     };
 
     return (
-        <div className="admin-layout flex-col h-screen">
+        <div className="admin-layout flex flex-col h-screen overflow-hidden">
             {/* Top Navigation Bar */}
-            <header className="top-nav flex items-center justify-between px-6 py-3" style={{ background: 'var(--primary-900)', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <header className="top-nav flex items-center justify-between px-6 py-3" style={{ background: 'var(--primary-900)', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
                 <div className="flex items-center gap-6">
                     {/* Top Tabs */}
                     <nav className="flex items-center gap-2">
@@ -195,15 +195,15 @@ const AdminLayout = () => {
             {/* Bottom Section (Sidebar + Main Content) */}
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
-                <aside className="sidebar" style={{ background: 'var(--primary-900)' }}>
-                    <nav className="nav-section custom-scrollbar" style={{ paddingTop: '2rem' }}>
+                <aside className="sidebar" style={{ background: 'var(--primary-900)', height: '100%' }}>
+                    <nav className="nav-section custom-scrollbar" style={{ paddingTop: '2rem', height: '100%', overflowY: 'auto' }}>
                         {renderSidebarContent()}
                     </nav>
                 </aside>
 
                 {/* Main Content */}
                 <main className="main-content flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 custom-scrollbar">
-                    <div className="animate-fade-in relative min-h-full">
+                    <div className="animate-fade-in relative min-h-full p-8">
                         <React.Suspense fallback={
                             <div className="absolute inset-0 flex items-center justify-center bg-transparent">
                                 <div className="loading-spinner" style={{ width: '40px', height: '40px', border: '3px solid rgba(0,0,0,0.1)', borderTopColor: 'var(--accent-500)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>

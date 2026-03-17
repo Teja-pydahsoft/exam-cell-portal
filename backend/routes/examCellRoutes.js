@@ -9,6 +9,7 @@ router.use(authenticateToken);
 // Field Definitions
 router.get('/fields', examCellController.getFieldDefinitions);
 router.post('/fields', checkRole(['super_admin', 'admin', 'exam_cell']), examCellController.addFieldDefinition);
+router.put('/fields/:id', checkRole(['super_admin', 'admin', 'exam_cell']), examCellController.updateFieldDefinition);
 router.delete('/fields/:id', checkRole(['super_admin', 'admin', 'exam_cell']), examCellController.deleteFieldDefinition);
 
 // Student Values
