@@ -18,6 +18,8 @@ const Subjects = lazy(() => import('./pages/admin/Subjects'));
 const Regulations = lazy(() => import('./pages/admin/Regulations'));
 const FacultyAssignment = lazy(() => import('./pages/admin/FacultyAssignment'));
 const NominalRoll = lazy(() => import('./pages/admin/NominalRoll'));
+const UpdatePhotos = lazy(() => import('./pages/admin/UpdatePhotos'));
+const UpdateSignatures = lazy(() => import('./pages/admin/UpdateSignatures'));
 
 function PrivateRoute({ children, allowedRoles }) {
     const { user, loading } = useAuth();
@@ -70,6 +72,8 @@ function App() {
                         <Route path="student-management">
                             <Route index element={<StudentManagement />} />
                             <Route path="nominal-roll" element={<NominalRoll />} />
+                            <Route path="update-photos" element={<UpdatePhotos />} />
+                            <Route path="update-signatures" element={<UpdateSignatures />} />
                             <Route path="settings" element={<StudentFieldSettings />} />
                         </Route>
                         <Route path="examinations" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Examinations</h2><p>Coming Soon</p></div>} />

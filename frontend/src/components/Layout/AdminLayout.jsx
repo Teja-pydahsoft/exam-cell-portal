@@ -123,6 +123,14 @@ const AdminLayout = () => {
                                 <FileText size={18} />
                                 <span>Nominal Roll</span>
                             </Link>
+                            <Link to="/admin/student-management/update-photos" className={`nav-item ${location.pathname.includes('/student-management/update-photos') ? 'active' : ''}`}>
+                                <UploadCloud size={18} />
+                                <span>Update Photos</span>
+                            </Link>
+                            <Link to="/admin/student-management/update-signatures" className={`nav-item ${location.pathname.includes('/student-management/update-signatures') ? 'active' : ''}`}>
+                                <UploadCloud size={18} />
+                                <span>Update Signatures</span>
+                            </Link>
                             <Link to="/admin/student-management/settings" className={`nav-item ${location.pathname.includes('/student-management/settings') ? 'active' : ''}`}>
                                 <Settings size={18} />
                                 <span>Field Settings</span>

@@ -76,64 +76,71 @@ const ExamCellFieldsSection = ({ studentId, isVerified }) => {
 
     return (
         <form onSubmit={handleSave} className="anim-fade-in">
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {fields.map(field => (
-                    <div key={field.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                        <label className="filter-label mb-3 flex items-center justify-between">
-                             <span>{field.field_label}</span>
-                             {!isVerified && <span className="text-[9px] text-orange-500 bg-orange-50 px-2 py-0.5 rounded border border-orange-100 font-bold uppercase tracking-wider">Verification Required</span>}
+                    <div key={field.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:border-primary-100 transition-colors flex flex-col relative group">
+                        <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3 flex items-start justify-between gap-2">
+                            <span className="truncate flex-1" title={field.field_label}>{field.field_label}</span>
+                            <div className="flex flex-col items-end gap-1 shrink-0">
+                                <span className="text-[8px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-1.5 py-0.5 rounded-md border border-primary-100 truncate max-w-[80px]" title={field.field_category}>
+                                    {field.field_category || 'General'}
+                                </span>
+                                {!isVerified && <span className="text-[8px] text-orange-500 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-100 font-bold uppercase tracking-widest" title="Verification Required">Unverified</span>}
+                            </div>
                         </label>
-                        {field.field_type === 'select' ? (
-                            <select 
-                                className="filter-input w-full"
-                                value={values[field.id] || ''}
-                                onChange={e => handleInputChange(field.id, e.target.value)}
-                                disabled={!isVerified}
-                            >
-                                <option value="">Select Option</option>
-                                {(() => {
-                                    try {
-                                        const opts = JSON.parse(field.field_options || '[]');
-                                        return Array.isArray(opts) ? opts.map((opt, i) => (
-                                            <option key={i} value={opt}>{opt}</option>
-                                        )) : null;
-                                    } catch (e) { return null; }
-                                })()}
-                            </select>
-                        ) : field.field_type === 'date' ? (
-                            <input 
-                                type="date"
-                                className="filter-input w-full"
-                                value={values[field.id] || ''}
-                                onChange={e => handleInputChange(field.id, e.target.value)}
-                                disabled={!isVerified}
-                            />
-                        ) : field.field_type === 'number' ? (
-                            <input 
-                                type="number"
-                                className="filter-input w-full"
-                                value={values[field.id] || ''}
-                                onChange={e => handleInputChange(field.id, e.target.value)}
-                                disabled={!isVerified}
-                            />
-                        ) : field.field_type === 'textarea' ? (
-                            <textarea 
-                                className="filter-input w-full h-24 py-3 leading-relaxed"
-                                value={values[field.id] || ''}
-                                onChange={e => handleInputChange(field.id, e.target.value)}
-                                disabled={!isVerified}
-                                placeholder="Enter detailed information..."
-                            />
-                        ) : (
-                            <input 
-                                type="text"
-                                className="filter-input w-full"
-                                value={values[field.id] || ''}
-                                onChange={e => handleInputChange(field.id, e.target.value)}
-                                disabled={!isVerified}
-                                placeholder={`Enter ${field.field_label.toLowerCase()}`}
-                            />
-                        )}
+                        <div className="mt-auto">
+                            {field.field_type === 'select' ? (
+                                <select 
+                                    className="filter-input w-full text-xs py-2 shadow-sm border-gray-200"
+                                    value={values[field.id] || ''}
+                                    onChange={e => handleInputChange(field.id, e.target.value)}
+                                    disabled={!isVerified}
+                                >
+                                    <option value="">Select Option</option>
+                                    {(() => {
+                                        try {
+                                            const opts = JSON.parse(field.field_options || '[]');
+                                            return Array.isArray(opts) ? opts.map((opt, i) => (
+                                                <option key={i} value={opt}>{opt}</option>
+                                            )) : null;
+                                        } catch (e) { return null; }
+                                    })()}
+                                </select>
+                            ) : field.field_type === 'date' ? (
+                                <input 
+                                    type="date"
+                                    className="filter-input w-full text-xs py-2 shadow-sm border-gray-200"
+                                    value={values[field.id] || ''}
+                                    onChange={e => handleInputChange(field.id, e.target.value)}
+                                    disabled={!isVerified}
+                                />
+                            ) : field.field_type === 'number' ? (
+                                <input 
+                                    type="number"
+                                    className="filter-input w-full text-xs py-2 shadow-sm border-gray-200"
+                                    value={values[field.id] || ''}
+                                    onChange={e => handleInputChange(field.id, e.target.value)}
+                                    disabled={!isVerified}
+                                />
+                            ) : field.field_type === 'textarea' ? (
+                                <textarea 
+                                    className="filter-input w-full h-20 py-2 text-xs leading-relaxed shadow-sm border-gray-200"
+                                    value={values[field.id] || ''}
+                                    onChange={e => handleInputChange(field.id, e.target.value)}
+                                    disabled={!isVerified}
+                                    placeholder="Enter detailed information..."
+                                />
+                            ) : (
+                                <input 
+                                    type="text"
+                                    className="filter-input w-full text-xs py-2 shadow-sm border-gray-200"
+                                    value={values[field.id] || ''}
+                                    onChange={e => handleInputChange(field.id, e.target.value)}
+                                    disabled={!isVerified}
+                                    placeholder={`Enter ${field.field_label.toLowerCase()}`}
+                                />
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>

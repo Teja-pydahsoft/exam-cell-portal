@@ -38,6 +38,7 @@ exports.getStudents = async (req, res) => {
                 s.registration_status,
                 s.exam_cell_verified,
                 s.student_photo,
+                s.student_signature,
                 s.previous_college,
                 s.certificates_status,
                 s.remarks,
@@ -105,5 +106,51 @@ exports.toggleVerification = async (req, res) => {
             message: "Failed to update verification status.",
             error: error.message
         });
+    }
+};
+
+exports.updateStudentPhoto = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { photoUrl } = req.body;
+        
+        if (!photoUrl) {
+            return res.status(400).json({ success: false, message: 'Photo data is required' });
+        }
+
+        const query = 'UPDATE students SET student_photo = ? WHERE id = ?';
+        const [result] = await masterPool.query(query, [photoUrl, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Student not found.' });
+        }
+
+        res.json({ success: true, message: 'Photo updated successfully' });
+    } catch (error) {
+        console.error("Error updating photo:", error);
+        res.status(500).json({ success: false, message: 'Failed to update photo' });
+    }
+};
+
+exports.updateStudentSignature = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { signatureUrl } = req.body;
+        
+        if (!signatureUrl) {
+            return res.status(400).json({ success: false, message: 'Signature data is required' });
+        }
+
+        const query = 'UPDATE students SET student_signature = ? WHERE id = ?';
+        const [result] = await masterPool.query(query, [signatureUrl, id]);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Student not found.' });
+        }
+
+        res.json({ success: true, message: 'Signature updated successfully' });
+    } catch (error) {
+        console.error("Error updating signature:", error);
+        res.status(500).json({ success: false, message: 'Failed to update signature' });
     }
 };
