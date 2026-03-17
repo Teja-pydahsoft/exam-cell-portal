@@ -29,7 +29,7 @@ const DashboardSkeleton = () => {
     return (
         <div>
             {/* Header Skeleton */}
-            <div className="dashboard-header" style={{ marginBottom: '2rem' }}>
+            <div className="dashboard-header" style={{ marginBottom: '1rem' }}>
                 <div>
                     <Skeleton className="mb-2" width={200} height={40} style={{ marginBottom: '0.5rem' }} />
                     <Skeleton width={300} height={20} />
@@ -38,7 +38,7 @@ const DashboardSkeleton = () => {
             </div>
 
             {/* Stat Grid Skeleton */}
-            <div className="stat-grid" style={{ marginBottom: '2.5rem' }}>
+            <div className="stat-grid" style={{ marginBottom: '1rem' }}>
                 {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="stat-card" style={{ position: 'relative', overflow: 'hidden' }}>
                         <div className="flex" style={{ justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
@@ -53,7 +53,7 @@ const DashboardSkeleton = () => {
             </div>
 
             {/* Content Grid Skeleton */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
                 {/* Recent Activities Skeleton */}
                 <div className="card">
                     <div className="flex" style={{ justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '1px solid #f3f4f6', paddingBottom: '1rem' }}>
@@ -166,7 +166,7 @@ const Dashboard = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="card">
                     <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h3 className="text-xl font-bold text-gray-900 font-display">Recent Activities</h3>

@@ -204,8 +204,8 @@ const FacultyAssignment = () => {
     );
 
     return (
-        <div className="page-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 'calc(100vh - 100px)' }}>
-            <div className="page-header" style={{ marginBottom: '24px' }}>
+        <div className="p-2 page-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 'calc(100vh - 100px)' }}>
+            <div className="page-header" style={{ marginBottom: '1rem' }}>
                 <div>
                     <h1 className="page-title font-display" style={{ fontSize: '24px', fontWeight: '700', color: '#111827' }}>Faculty Assignment</h1>
                     <p className="page-subtitle" style={{ color: '#6b7280', marginTop: '4px' }}>Assign faculty to subjects based on Regulation, Branch, and Semester.</p>
@@ -213,7 +213,7 @@ const FacultyAssignment = () => {
             </div>
 
             {/* Filters */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px', alignItems: 'center', background: '#fff', padding: '16px 24px', borderRadius: '16px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1rem', alignItems: 'center', background: '#fff', padding: '12px', borderRadius: '16px', border: '1px solid #e5e7eb', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}>
                 <div style={{ flex: '1 1 240px' }}>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#4b5563', textTransform: 'uppercase', marginBottom: '6px', letterSpacing: '0.025em' }}>Regulation</label>
                     <select
@@ -280,10 +280,10 @@ const FacultyAssignment = () => {
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 420px', gap: '24px', flex: 1, height: 'calc(100vh - 280px)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 420px', gap: '1rem', flex: 1, height: 'calc(100vh - 200px)' }}>
                 {/* Subjects Table */}
                 <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #e5e7eb', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.05)' }}>
-                    <div style={{ padding: '20px 24px', borderBottom: '1px solid #e5e7eb', background: '#f9fafb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ padding: '12px 16px', borderBottom: '1px solid #e5e7eb', background: '#f9fafb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#1f2937', display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <BookOpen size={18} className="text-primary-600" />
                             Listed Subjects

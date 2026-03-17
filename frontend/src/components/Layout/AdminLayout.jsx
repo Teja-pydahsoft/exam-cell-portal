@@ -26,6 +26,7 @@ const AdminLayout = () => {
         if (path.includes('/regulation-mapping')) return 'regulation-mapping';
         if (path.includes('/faculty-assignment')) return 'regulation-mapping';
         if (path.includes('/user-management')) return 'user-management';
+        if (path.includes('/student-management/nominal-roll')) return 'student-management';
         if (path.includes('/student-management')) return 'student-management';
         if (path.includes('/examinations')) return 'examinations';
         return 'master-setup'; // Default
@@ -118,6 +119,10 @@ const AdminLayout = () => {
                                 <Users size={18} />
                                 <span>Student Directory</span>
                             </Link>
+                            <Link to="/admin/student-management/nominal-roll" className={`nav-item ${location.pathname.includes('/student-management/nominal-roll') ? 'active' : ''}`}>
+                                <FileText size={18} />
+                                <span>Nominal Roll</span>
+                            </Link>
                             <Link to="/admin/student-management/settings" className={`nav-item ${location.pathname.includes('/student-management/settings') ? 'active' : ''}`}>
                                 <Settings size={18} />
                                 <span>Field Settings</span>
@@ -208,7 +213,7 @@ const AdminLayout = () => {
 
                 {/* Main Content */}
                 <main className="main-content flex-1 overflow-y-auto overflow-x-hidden bg-gray-50 custom-scrollbar">
-                    <div className="animate-fade-in relative min-h-full p-8">
+                    <div className="animate-fade-in relative min-h-full p-2">
                         <React.Suspense fallback={
                             <div className="absolute inset-0 flex items-center justify-center bg-transparent">
                                 <div className="loading-spinner" style={{ width: '40px', height: '40px', border: '3px solid rgba(0,0,0,0.1)', borderTopColor: 'var(--accent-500)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>

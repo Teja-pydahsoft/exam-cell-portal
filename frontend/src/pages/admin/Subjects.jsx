@@ -297,7 +297,7 @@ const Subjects = () => {
 
     return (
         <div className="page-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div className="page-header" style={{ marginBottom: '24px' }}>
+            <div className="page-header" style={{ marginBottom: '1rem' }}>
                 <div>
                     <h1 className="page-title font-display" style={{ fontSize: '24px', fontWeight: '700', color: '#111827' }}>Subject Directory</h1>
                     <p className="page-subtitle" style={{ color: '#6b7280', marginTop: '4px' }}>Manage curriculum subjects across branches and semesters.</p>
@@ -315,7 +315,7 @@ const Subjects = () => {
             </div>
 
             {/* Filters */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px', alignItems: 'center', background: '#fff', padding: '16px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1rem', alignItems: 'center', background: '#fff', padding: '12px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                 <div style={{ flex: '1 1 200px' }}>
                     <label style={{ display: 'block', fontSize: '11px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', marginBottom: '4px' }}>Regulation</label>
                     <select
@@ -398,7 +398,7 @@ const Subjects = () => {
 
             {/* Active Regulation Badge */}
             {activeRegulation && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', padding: '10px 16px', background: 'var(--primary-50)', borderRadius: '10px', border: '1px solid var(--primary-100)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem', padding: '8px 12px', background: 'var(--primary-50)', borderRadius: '10px', border: '1px solid var(--primary-100)' }}>
                     <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--primary-700)', padding: '2px 10px', background: 'var(--primary-100)', borderRadius: '20px' }}>
                         {activeRegulation.name}
                     </span>

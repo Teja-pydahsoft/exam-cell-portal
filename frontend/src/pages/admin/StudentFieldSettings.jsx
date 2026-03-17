@@ -90,8 +90,8 @@ const StudentFieldSettings = () => {
     };
 
     return (
-        <div className="p-6 anim-fade-in">
-            <div className="flex justify-between items-center mb-8">
+        <div className="p-2 anim-fade-in">
+            <div className="flex justify-between items-center mb-4">
                 <div>
                     <h1 className="text-3xl font-bold text-primary-900" style={{ fontFamily: 'Times New Roman' }}>Student Field Settings</h1>
                     <p className="text-gray-500 mt-1">Manage customizable fields for student records.</p>
@@ -107,15 +107,15 @@ const StudentFieldSettings = () => {
             </div>
 
             {showAddForm && (
-                <div className="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden mb-8 anim-slide-up">
-                    <div className="p-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
+                <div className="bg-white rounded-2xl shadow-sm border border-primary-100 overflow-hidden mb-4 anim-slide-up">
+                    <div className="p-4 border-b border-gray-50 flex justify-between items-center bg-gray-50/50">
                         <h2 className="text-lg font-bold text-gray-900">New Field Definition</h2>
                         <button onClick={() => setShowAddForm(false)} className="text-gray-400 hover:text-gray-600">
                             <X size={20} />
                         </button>
                     </div>
-                    <form onSubmit={handleAddField} className="p-8">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <form onSubmit={handleAddField} className="p-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="form-group">
                                 <label className="form-label font-bold text-gray-700">Field Label</label>
                                 <input 
@@ -186,11 +186,11 @@ const StudentFieldSettings = () => {
                     <table className="w-full text-left text-sm whitespace-nowrap">
                         <thead className="bg-gray-100 text-gray-600 uppercase text-xs font-semibold">
                             <tr>
-                                <th className="px-6 py-4 border-b">Field Icon</th>
-                                <th className="px-6 py-4 border-b">Field Label</th>
-                                <th className="px-6 py-4 border-b">Data Type</th>
-                                <th className="px-6 py-4 border-b">Options / Details</th>
-                                <th className="px-6 py-4 border-b text-right">Actions</th>
+                                <th className="px-3 py-2 border-b text-[10px]">Icon</th>
+                                <th className="px-3 py-2 border-b text-[10px]">Label</th>
+                                <th className="px-3 py-2 border-b text-[10px]">Type</th>
+                                <th className="px-3 py-2 border-b text-[10px]">Options</th>
+                                <th className="px-3 py-2 border-b text-right text-[10px]">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -205,38 +205,38 @@ const StudentFieldSettings = () => {
                             ) : fields.length > 0 ? (
                                 fields.map(field => (
                                     <tr key={field.id} className="border-b border-gray-100 last:border-0 hover:bg-primary-50/30 transition-colors">
-                                        <td className="px-6 py-4">
-                                            <div className="p-2 rounded-lg bg-primary-900 text-accent-400 inline-flex shadow-sm">
+                                        <td className="px-3 py-2">
+                                            <div className="p-1.5 rounded-lg bg-primary-900 text-accent-400 inline-flex shadow-sm">
                                                 {getFieldIcon(field.field_type)}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 font-bold text-gray-900">{field.field_label}</td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-primary-700 bg-primary-50 px-2.5 py-1 rounded-md border border-primary-100">
+                                        <td className="px-3 py-2 font-bold text-gray-900 text-xs">{field.field_label}</td>
+                                        <td className="px-3 py-2">
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-primary-700 bg-primary-50 px-2 py-0.5 rounded-md border border-primary-100">
                                                 {field.field_type}
                                             </span>
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-3 py-2">
                                             {field.field_type === 'select' && field.field_options ? (
                                                 <div className="flex flex-wrap gap-1 max-w-xs">
                                                     {(() => {
                                                         try {
                                                             const opts = JSON.parse(field.field_options);
                                                             return Array.isArray(opts) ? opts.map((opt, i) => (
-                                                                <span key={i} className="text-[10px] text-accent-600 bg-accent-50 px-2 py-0.5 rounded border border-accent-100">
+                                                                <span key={i} className="text-[9px] text-accent-600 bg-accent-50 px-1.5 py-0.5 rounded border border-accent-100">
                                                                     {opt}
                                                                 </span>
-                                                            )) : <span className="text-gray-400 text-xs italic">Invalid options</span>;
+                                                            )) : <span className="text-gray-400 text-[10px] italic">Invalid options</span>;
                                                         } catch (e) {
-                                                            return <span className="text-gray-400 text-xs italic">Raw: {field.field_options}</span>;
+                                                            return <span className="text-gray-400 text-[10px] italic">Raw: {field.field_options}</span>;
                                                         }
                                                     })()}
                                                 </div>
                                             ) : (
-                                                <span className="text-gray-400 text-xs italic">No extra options</span>
+                                                <span className="text-gray-400 text-[10px] italic">No extra options</span>
                                             )}
                                         </td>
-                                        <td className="px-6 py-4 text-right">
+                                        <td className="px-3 py-2 text-right">
                                             <button 
                                                 onClick={() => handleDeleteField(field.id)}
                                                 className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"

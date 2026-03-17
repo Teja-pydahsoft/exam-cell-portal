@@ -316,8 +316,8 @@ const FacultyManagement = ({ initialTab = 'principals' }) => {
     };
 
     return (
-        <div className="institution-container faculty-page">
-            <div className="institution-header">
+        <div className="p-2 faculty-page">
+            <div className="institution-header" style={{ marginBottom: '1rem' }}>
                 <div>
                     <h1 className="institution-title">Faculty & Staff</h1>
                     <p className="institution-subtitle">Manage Principals and HODs.</p>

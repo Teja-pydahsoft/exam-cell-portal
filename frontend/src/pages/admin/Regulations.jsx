@@ -152,7 +152,7 @@ const Regulations = () => {
 
     return (
         <div className="page-container" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div className="page-header" style={{ marginBottom: '24px' }}>
+            <div className="page-header" style={{ marginBottom: '1rem' }}>
                 <div>
                     <h1 className="page-title font-display" style={{ fontSize: '24px', fontWeight: '700', color: '#111827' }}>Curriculum Regulations</h1>
                     <p className="page-subtitle" style={{ color: '#6b7280', marginTop: '4px' }}>Manage syllabus regulations and assign them to student batches</p>
@@ -163,7 +163,7 @@ const Regulations = () => {
             </div>
 
             {/* Filters */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px', alignItems: 'center', background: '#fff', padding: '16px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1rem', alignItems: 'center', background: '#fff', padding: '12px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                 <div style={{ flex: '1 1 200px' }}>
                     <label style={{ display: 'block', fontSize: '11px', fontWeight: '600', color: '#6b7280', textTransform: 'uppercase', marginBottom: '4px' }}>College Filter</label>
                     <select
@@ -192,13 +192,13 @@ const Regulations = () => {
                 </div>
             ) : (
                 Object.entries(grouped).map(([collegeName, regs]) => (
-                    <div key={collegeName} style={{ marginBottom: '32px' }}>
+                    <div key={collegeName} style={{ marginBottom: '1.5rem' }}>
                         <h2 style={{ fontSize: '13px', fontWeight: 700, color: 'var(--gray-400)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
                             {collegeName}
                         </h2>
                         <div style={{ display: 'grid', gap: '12px' }}>
                             {regs.map(reg => (
-                                <div key={reg.id} className="card anim-fade-in-up" style={{ padding: '20px 24px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', background: '#fff' }}>
+                                <div key={reg.id} className="card anim-fade-in-up" style={{ padding: '12px 16px', borderRadius: '12px', border: '1px solid #e5e7eb', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', background: '#fff' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                                             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--primary-50)', border: '1px solid var(--primary-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-700)', fontWeight: 700, fontSize: '16px', flexShrink: 0 }}>
