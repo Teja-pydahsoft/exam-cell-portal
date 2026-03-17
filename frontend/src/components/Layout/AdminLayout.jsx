@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, Users, BookOpen, Clock, FileText, Settings, LogOut, MessageSquare, ChevronRight, Building2, GraduationCap, Layers, Scroll, GitBranch, UploadCloud } from 'lucide-react';
+import { LayoutDashboard, Users, BookOpen, Clock, FileText, Settings, LogOut, MessageSquare, ChevronRight, Building2, GraduationCap, Layers, Scroll, GitBranch, UploadCloud, UserPlus } from 'lucide-react';
 
 
 import logo from '../../assets/logo.png';
@@ -24,6 +24,7 @@ const AdminLayout = () => {
         const path = location.pathname;
         if (path.includes('/master-setup')) return 'master-setup';
         if (path.includes('/regulation-mapping')) return 'regulation-mapping';
+        if (path.includes('/faculty-assignment')) return 'regulation-mapping';
         if (path.includes('/user-management')) return 'user-management';
         if (path.includes('/student-management')) return 'student-management';
         if (path.includes('/examinations')) return 'examinations';
@@ -88,6 +89,10 @@ const AdminLayout = () => {
                             <Link to="/admin/regulation-mapping/subjects" className={`nav-item ${location.pathname.includes('/regulation-mapping/subjects') ? 'active' : ''}`}>
                                 <BookOpen size={18} />
                                 <span>Subjects</span>
+                            </Link>
+                            <Link to="/admin/regulation-mapping/faculty-assignment" className={`nav-item ${location.pathname.includes('/regulation-mapping/faculty-assignment') ? 'active' : ''}`}>
+                                <UserPlus size={18} />
+                                <span>Faculty Assignment</span>
                             </Link>
                         </div>
                     </div>

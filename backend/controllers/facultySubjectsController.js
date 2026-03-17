@@ -29,7 +29,7 @@ exports.getAssignedFaculty = async (req, res) => {
         });
 
         const enriched = rows.map(r => {
-            const emp = empMap[r.employee_id];
+            const emp = empMap[String(r.employee_id)];
             let deptName = emp?.department || 'Unknown';
             if (typeof deptName === 'string' && deptName.startsWith('{')) {
                 try { deptName = JSON.parse(deptName).name || deptName; } catch(e){}
@@ -39,7 +39,8 @@ exports.getAssignedFaculty = async (req, res) => {
                 ...r,
                 employee_name: emp?.employee_name || 'Unknown',
                 emp_no: emp?.emp_no || '',
-                department: deptName
+                department: deptName,
+                designation: emp?.designation || ''
             };
         });
 

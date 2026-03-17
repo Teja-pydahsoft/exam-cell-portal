@@ -39,7 +39,8 @@ exports.getAllSubjects = async (req, res) => {
 
         const query = `
             SELECT s.*, r.name as regulation_name, r.college_id, r.course_id,
-                   b.name as branch_name
+                   b.name as branch_name,
+                   (SELECT COUNT(*) FROM faculty_subjects WHERE subject_id = s.id) as assigned_count
             FROM subjects s
             LEFT JOIN regulations r ON s.regulation_id = r.id
             LEFT JOIN course_branches b ON s.branch_id = b.id

@@ -16,6 +16,7 @@ const StudentFieldSettings = lazy(() => import('./pages/admin/StudentFieldSettin
 const Subjects = lazy(() => import('./pages/admin/Subjects'));
 // const Timetable = lazy(() => import('./pages/admin/Timetable'));
 const Regulations = lazy(() => import('./pages/admin/Regulations'));
+const FacultyAssignment = lazy(() => import('./pages/admin/FacultyAssignment'));
 
 function PrivateRoute({ children, allowedRoles }) {
     const { user, loading } = useAuth();
@@ -55,6 +56,7 @@ function App() {
                             <Route index element={<Navigate to="regulations" replace />} />
                             <Route path="regulations" element={<Regulations />} />
                             <Route path="subjects" element={<Subjects />} />
+                            <Route path="faculty-assignment" element={<FacultyAssignment />} />
                         </Route>
 
                         {/* User Management */}
