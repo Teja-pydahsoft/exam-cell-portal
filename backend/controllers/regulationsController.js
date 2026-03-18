@@ -137,6 +137,48 @@ exports.getGradeSettings = async (req, res) => {
     }
 };
 
+exports.getPassPercentageSettings = async (req, res) => {
+    try {
+        const { course_id, regulation_id, batch, subject_type } = req.query;
+
+        let query = `SELECT * FROM pass_settings WHERE 1=1`;
+        const params = [];
+
+        if (course_id) { query += ' AND course_id = ?'; params.push(course_id); }
+        if (regulation_id) { query += ' AND regulation_id = ?'; params.push(regulation_id); }
+        if (batch) { query += ' AND batch = ?'; params.push(batch); }
+        if (subject_type) { query += ' AND subject_type = ?'; params.push(subject_type); }
+
+        const [rows] = await masterPool.execute(query, params);
+        res.status(200).json({ success: true, data: rows });
+    } catch (error) {
+        console.error('Error in getPassPercentageSettings:', error);
+        res.status(500).json({ success: false, message: 'Server error fetching pass percentage settings' });
+    }
+};
+
+exports.savePassPercentageSettings = async (req, res) => {
+    try {
+        const { course_id, regulation_id, batch, subject_type, pass_percentage } = req.body;
+
+        if (!course_id || !regulation_id || !batch || !subject_type || pass_percentage === undefined) {
+            return res.status(400).json({ success: false, message: 'Missing required parameters' });
+        }
+
+        const upsertQuery = `
+            INSERT INTO pass_settings (course_id, regulation_id, batch, subject_type, pass_percentage)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE pass_percentage = VALUES(pass_percentage)
+        `;
+        await masterPool.execute(upsertQuery, [course_id, regulation_id, batch, subject_type, pass_percentage]);
+
+        res.status(200).json({ success: true, message: 'Pass percentage saved successfully' });
+    } catch (error) {
+        console.error('Error in savePassPercentageSettings:', error);
+        res.status(500).json({ success: false, message: 'Server error saving pass percentage settings' });
+    }
+};
+
 exports.saveGradeSettings = async (req, res) => {
     const connection = await masterPool.getConnection();
     try {
