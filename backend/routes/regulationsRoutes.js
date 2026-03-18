@@ -9,7 +9,9 @@ router.put('/:id', authenticateToken, regulationsController.updateRegulation);
 router.delete('/:id', authenticateToken, regulationsController.deleteRegulation);
 router.get('/:id/batches', authenticateToken, regulationsController.getBatchMappings);
 router.post('/:id/batches', authenticateToken, regulationsController.assignBatches);
-router.get('/grades-global', authenticateToken, regulationsController.getGradeSettings);
-router.post('/grades-global', authenticateToken, regulationsController.saveGradeSettings);
+router.get('/grades', authenticateToken, regulationsController.getGradeSettings);
+router.post('/grades', authenticateToken, regulationsController.saveGradeSettings);
+router.get('/pass-percentage', authenticateToken, regulationsController.getPassPercentageSettings);
+router.post('/pass-percentage', authenticateToken, regulationsController.savePassPercentageSettings);
 
 module.exports = router;

@@ -109,41 +109,78 @@ exports.assignBatches = async (req, res) => {
 
 exports.getGradeSettings = async (req, res) => {
     try {
-        const [rows] = await masterPool.query('SELECT * FROM grade_settings ORDER BY min_percentage DESC');
-        res.json({ success: true, data: rows });
+        const { course_id, regulation_id, batch, subject_type } = req.query;
+
+        if (!course_id || !regulation_id || !batch || !subject_type) {
+            return res.status(400).json({ success: false, message: 'Missing mapping context parameters' });
+        }
+
+        const query = `
+            SELECT id, grade_name, min_percentage, points 
+            FROM grade_settings 
+            WHERE course_id=? AND regulation_id=? AND batch=? AND subject_type=?
+            ORDER BY min_percentage DESC`;
+        const [rows] = await masterPool.execute(query, [course_id, regulation_id, batch, subject_type]);
+
+        const passQuery = `
+            SELECT pass_percentage 
+            FROM pass_settings 
+            WHERE course_id=? AND regulation_id=? AND batch=? AND subject_type=?`;
+        const [passRows] = await masterPool.execute(passQuery, [course_id, regulation_id, batch, subject_type]);
+        
+        const pass_percentage = passRows.length > 0 ? passRows[0].pass_percentage : '';
+
+        res.status(200).json({ success: true, data: { grades: rows, pass_percentage } });
     } catch (error) {
-        console.error('Error fetching global grade settings:', error);
-        res.status(500).json({ success: false, message: 'Failed to fetch grade settings' });
+        console.error('Error in getGradeSettings:', error);
+        res.status(500).json({ success: false, message: 'Server error tracking grades' });
     }
 };
 
 exports.saveGradeSettings = async (req, res) => {
     const connection = await masterPool.getConnection();
     try {
-        const { grades } = req.body;
+        const { course_id, regulation_id, batch, subject_type, grades, pass_percentage } = req.body;
 
-        await connection.beginTransaction();
-        await connection.query('DELETE FROM grade_settings');
-
-        if (grades && grades.length > 0) {
-            const values = grades.map(g => [
-                g.grade_name,
-                g.min_percentage,
-                g.max_percentage,
-                g.points || 0
-            ]);
-            await connection.query(
-                'INSERT INTO grade_settings (grade_name, min_percentage, max_percentage, points) VALUES ?',
-                [values]
-            );
+        if (!course_id || !regulation_id || !batch || !subject_type || !Array.isArray(grades) || pass_percentage === undefined) {
+            return res.status(400).json({ success: false, message: 'Missing required context or grade parameters' });
         }
 
+        await connection.beginTransaction();
+
+        // 1. Delete old grades for this context
+        const delQuery = `DELETE FROM grade_settings WHERE course_id=? AND regulation_id=? AND batch=? AND subject_type=?`;
+        await connection.execute(delQuery, [course_id, regulation_id, batch, subject_type]);
+
+        // 2. Insert new grades
+        if (grades.length > 0) {
+            const insertQuery = `INSERT INTO grade_settings (course_id, regulation_id, batch, subject_type, grade_name, min_percentage, points) VALUES ?`;
+            const values = grades.map(g => [
+                course_id,
+                regulation_id,
+                batch,
+                subject_type,
+                g.grade_name.trim(),
+                g.min_percentage,
+                g.points || 0
+            ]);
+            await connection.query(insertQuery, [values]);
+        }
+
+        // 3. Upsert pass percentage
+        const upsertPassQuery = `
+            INSERT INTO pass_settings (course_id, regulation_id, batch, subject_type, pass_percentage)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE pass_percentage = VALUES(pass_percentage)
+        `;
+        await connection.execute(upsertPassQuery, [course_id, regulation_id, batch, subject_type, pass_percentage]);
+
         await connection.commit();
-        res.json({ success: true, message: 'Global grade settings saved successfully' });
+        res.status(200).json({ success: true, message: 'Grade and Pass scheme defined successfully' });
     } catch (error) {
         await connection.rollback();
-        console.error('Error saving global grade settings:', error);
-        res.status(500).json({ success: false, message: 'Failed to save grade settings' });
+        console.error('Error in saveGradeSettings:', error);
+        res.status(500).json({ success: false, message: 'Server error saving grading scheme' });
     } finally {
         connection.release();
     }
